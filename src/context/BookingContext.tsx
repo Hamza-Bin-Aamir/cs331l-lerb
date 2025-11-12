@@ -37,7 +37,7 @@ export const BookingProvider = ({ children }: ProviderProps) => {
 
   // Simulate a POST request that sends JSON body + headers and returns whether booking succeeded.
   const bookNow = async (resourceId: string) => {
-    const body = JSON.stringify({ resource_id: Number(resourceId), user: currentUser });
+  const body = JSON.stringify({ resource_id: resourceId, user: currentUser });
     const headers = {
       'Content-Type': 'application/json',
       'X-User': currentUser,
