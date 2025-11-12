@@ -36,3 +36,63 @@
     transform: rotate(360deg);
   }
 }
+
+/* New styles for booking app */
+.App-main {
+  padding: 24px;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.status {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 0 12px 0;
+}
+
+.status-green {
+  color: #047857; /* Green = Available */
+}
+
+.status-red {
+  color: #b91c1c; /* Red = Booked */
+}
+
+.btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
