@@ -1,10 +1,22 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 
 export const ResourceDetailPage = () => {
-  const resourceId = 'hardcoded-id'; // Replace useParams with a hardcoded value temporarily
+  // derive resource id from the current path (avoid react-router hooks typing issues)
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const resourceId = pathParts[pathParts.length - 1];
+
   const { resources, bookNow, currentUser } = useBooking();
+
+  // If resources haven't loaded yet, show a loading state. This avoids
+  // immediately showing "not found" while the context fetch is in progress.
+  if (!resources || resources.length === 0) {
+    return (
+      <div className="page">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   const resource = resources.find((r) => r.id === resourceId);
 
@@ -12,7 +24,13 @@ export const ResourceDetailPage = () => {
     return (
       <div className="page">
         <h2>Resource not found</h2>
-        <button className="btn" onClick={() => <Navigate to="/resources" />}>
+        <button
+          className="btn"
+          onClick={() => {
+            window.history.pushState(null, '', '/resources');
+            window.dispatchEvent(new Event('locationchange'));
+          }}
+        >
           Back to resources
         </button>
       </div>
@@ -23,7 +41,9 @@ export const ResourceDetailPage = () => {
 
   const handleBook = async () => {
     const ok = await bookNow(resource.id);
-    if (ok) <Navigate to="/my-bookings" />;
+    if (ok) {
+      window.location.assign('/my-bookings');
+    }
   };
 
   return (
@@ -40,7 +60,14 @@ export const ResourceDetailPage = () => {
         <button className="btn" onClick={handleBook} disabled={!isAvailable}>
           {isAvailable ? 'Book Now' : 'Unavailable'}
         </button>
-        <button className="btn" onClick={() => <Navigate to="/resources" />} style={{ marginLeft: 8 }}>
+        <button
+          className="btn"
+          onClick={() => {
+            window.history.pushState(null, '', '/resources');
+            window.dispatchEvent(new Event('locationchange'));
+          }}
+          style={{ marginLeft: 8 }}
+        >
           Back
         </button>
       </div>
