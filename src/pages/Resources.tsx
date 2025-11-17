@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useBooking } from '../context/BookingContext';
 import '../App.css';
 import { NavLink } from 'react-router-dom';
 
 export const ResourcesPage = () => {
   const { resources, bookNow, currentUser } = useBooking();
-  const [searchParams, setSearchParams] = useState(new URLSearchParams(window.location.search));
+  const [searchParams, setSearchParams] = React.useState(new URLSearchParams(window.location.search));
+  // keep local searchParams in sync with URL (listen to history changes)
+  React.useEffect(() => {
+    setSearchParams(new URLSearchParams(window.location.search));
+    const onPop = () => setSearchParams(new URLSearchParams(window.location.search));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   const categoryFilter = searchParams.get('category') || '';
   const onlyAvailable = searchParams.get('available') === '1';
@@ -32,11 +39,24 @@ export const ResourcesPage = () => {
         <button
           className="btn"
           style={{ marginLeft: 8 }}
-          onClick={() => setSearchParams({ available: '1' })}
+          onClick={() => {
+            const p = new URLSearchParams();
+            p.set('available', '1');
+            setSearchParams(p);
+            window.history.pushState(null, '', `/resources?${p.toString()}`);
+          }}
         >
           Only Available
         </button>
-        <button className="btn" style={{ marginLeft: 8 }} onClick={() => setSearchParams({})}>
+        <button
+          className="btn"
+          style={{ marginLeft: 8 }}
+          onClick={() => {
+            const p = new URLSearchParams();
+            setSearchParams(p);
+            window.history.pushState(null, '', '/resources');
+          }}
+        >
           Clear
         </button>
       </div>
