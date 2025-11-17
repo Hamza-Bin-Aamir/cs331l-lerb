@@ -161,7 +161,7 @@ export const ResourcesPage = () => {
                 )}
               </div>
               <div className={`status ${isAvailable ? 'status-green' : 'status-red'}`}>{statusText}</div>
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div className="card-actions">
                 <button
                   className="btn"
                   onClick={async () => {
@@ -203,11 +203,12 @@ export const ResourcesPage = () => {
                     <input
                       value={editValues.emoji ?? r.emoji}
                       onChange={(e) => setEditValues({ ...editValues, emoji: e.target.value })}
-                      style={{ width: 48 }}
+                      className="card-input-emoji"
                     />
                     <select
                       value={editValues.category ?? r.category ?? ''}
                       onChange={(e) => setEditValues({ ...editValues, category: e.target.value || undefined })}
+                      className="card-input-select"
                     >
                       <option value="">(none)</option>
                       {categories.map((c: string) => (

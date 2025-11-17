@@ -1,40 +1,40 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
+import './Header.css';
 
 export const Header = () => {
   const { currentUser, setCurrentUser, availableUsers } = useBooking();
 
-  const navStyle: any = {
-    display: 'flex',
-    gap: 16,
-    alignItems: 'center',
-  };
-
   return (
-    <header className="App-header" style={{ minHeight: 'unset', padding: '12px 20px' }}>
-      <nav style={navStyle}>
-        <NavLink to="/resources" style={({ isActive }: any) => ({ color: isActive ? '#61dafb' : '#fff' })}>
-          Resources
-        </NavLink>
-        <NavLink to="/my-bookings" style={({ isActive }: any) => ({ color: isActive ? '#61dafb' : '#fff' })}>
-          My Bookings
-        </NavLink>
-      </nav>
-      <div style={{ marginLeft: 'auto', fontSize: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span>Logged in as</span>
-        <select
-          aria-label="Select user"
-          value={currentUser}
-          onChange={(e) => setCurrentUser(e.target.value)}
-          style={{ padding: '4px 6px', borderRadius: 4 }}
-        >
-          {availableUsers.map((u) => (
-            <option key={u} value={u}>
-              {u}
-            </option>
-          ))}
-        </select>
+    <header className="Header-root">
+      <div className="Header-container">
+        <div className="Header-brand">LERB</div>
+
+        <nav className="Header-nav" aria-label="Main navigation">
+          <NavLink to="/resources" className={({ isActive }: any) => (isActive ? 'Header-link active' : 'Header-link')}>
+            Resources
+          </NavLink>
+          <NavLink to="/my-bookings" className={({ isActive }: any) => (isActive ? 'Header-link active' : 'Header-link')}>
+            My Bookings
+          </NavLink>
+        </nav>
+
+        <div className="Header-user">
+          <span className="Header-user-label">Logged in as</span>
+          <select
+            aria-label="Select user"
+            value={currentUser}
+            onChange={(e) => setCurrentUser(e.target.value)}
+            className="Header-select"
+          >
+            {availableUsers.map((u) => (
+              <option key={u} value={u}>
+                {u}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </header>
   );

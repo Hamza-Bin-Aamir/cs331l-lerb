@@ -1,0 +1,107 @@
+/* Styles for the app header - clean, compact top navigation */
+.Header-root {
+  width: 100%;
+  background: linear-gradient(90deg, #0f172a 0%, #111827 60%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2,6,23,0.5);
+}
+
+.Header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+}
+
+.Header-brand {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #e6f0ff;
+}
+
+.Header-nav {
+  display: flex;
+  gap: 18px;
+  margin-left: 12px;
+  align-items: center;
+}
+
+.Header-link {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+  font-weight: 600;
+}
+
+.Header-link:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-1px);
+}
+
+.Header-link.active {
+  color: #7dd3fc; /* light blue */
+  background: rgba(125,211,252,0.06);
+}
+
+.Header-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+}
+
+.Header-user-label {
+  opacity: 0.85;
+}
+
+.Header-select {
+  background: rgba(255,255,255,0.02); /* subtle contrast when closed */
+  color: #fff; /* closed select shows white text on dark header */
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 8px;
+  border-radius: 6px;
+  outline: none;
+  min-width: 140px;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+  -webkit-appearance: menulist; /* keep native feel */
+}
+
+.Header-select:focus {
+  border-color: rgba(125,211,252,0.6);
+  box-shadow: 0 0 0 4px rgba(125,211,252,0.06);
+}
+
+/* Style native option items so opened dropdown shows readable text/background.
+   Note: some browsers/platforms ignore option styling — see notes below. */
+.Header-select option {
+  background: #ffffff;
+  color: #0b1220;
+}
+
+/* For Windows/IE/Edge fallback styling for the dropdown arrow */
+.Header-select::-ms-expand {
+  filter: invert(1);
+}
+
+/* Small screens: compact header */
+@media (max-width: 640px) {
+  .Header-container {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .Header-nav {
+    display: none; /* hide links on very small screens to keep header clean */
+  }
+
+  .Header-select {
+    min-width: 110px;
+  }
+}
